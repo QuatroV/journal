@@ -102,7 +102,9 @@ class GradeController < ApplicationController
   end
 
   def create_lesson
-    Lesson.create(day: params[:day], pos: params[:pos], subject: params[:subject], teacher_id: params[:teacher_id], homework: params[:homework], classnum: params[:classnum], classlet: params[:classlet])
+    if teacher_is_free?(params[:day], params[:pos], params[:teacher_id]) then
+      Lesson.create(day: params[:day], pos: params[:pos], subject: params[:subject], teacher_id: params[:teacher_id], homework: params[:homework], classnum: params[:classnum], classlet: params[:classlet])
+    end
   end
   
   def get_teachers
@@ -196,5 +198,8 @@ class GradeController < ApplicationController
     return timetable, teachers
   end
 
-  
+  def teacher_is_free?(t_day, t_pos, t_teacher_id)
+    search = Lesson.find_by(day: t_day, pos: t_pos, teacher_id: t_teacher_id)
+    search == nil
+  end
 end
