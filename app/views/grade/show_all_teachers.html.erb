@@ -7,7 +7,7 @@
             <th> Subject </th>
             <th> Classes </th>
         </thead>
-        <% teachers = Student.where(id: Lesson.all.group(:teacher_id, :subject).to_a.map{|el|el.teacher_id})%>
+        <% teachers = Student.where(id: Lesson.all.unscoped.group(:teacher_id, :subject).to_a.map{|el|el.teacher_id})%>
         <% teachers.each do |teacher|%>
         <tr>
             <td> <%= teacher.name %> </td>
