@@ -5,8 +5,8 @@
 
 import "bootstrap"
 require("@rails/ujs").start()
-require("jquery")
 require("turbolinks").start()
+require("jquery")
 require("@rails/activestorage").start()
 require("channels")
 
