@@ -1,0 +1,3 @@
+<p> Current user: <%=current_student.name%></p>
+<p> <%=current_student.role%> <p>
+<%= link_to 'Sign out', destroy_student_session_path, method: :delete%>

@@ -1,0 +1,63 @@
+<h2>Sign up</h2>
+<hr width="300"/>
+
+<div class="col-md-4 offset-md-4">
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+  
+  <div class="field mt-3 mb-3">
+    <%= f.text_field :name, autofocus: true, class:"form-control", placeholder: "Your name" %>
+  </div>
+
+  <div class="field mt-3 mb-3">
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control", placeholder: "Your email" %>
+  </div>
+
+  <div class="field mt-3 mb-3">
+    <%= f.password_field :password, autocomplete: "new-password", class:"form-control", placeholder: "Your password" %>
+  </div>
+
+  <div class="field">
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class:"form-control", placeholder: "Your password once more"  %>
+  </div>
+
+  <div class = "field mt-3 mb-3">
+    <%kinds_of_teacher = []%>
+    <%Subject.all.each{|el| kinds_of_teacher.push(el.name+" Teacher")} %>
+    <% roles = kinds_of_teacher.insert(0,"Student").push("Administrator")%>
+    <%= f.label "Who are you?", class:  "mt-1 mb-3"%>
+    <%= f.select :role, roles, {:include_blank => true}, {class: "custom-select"}%>
+  </div>
+
+  <div class = "choosing_class">
+    <% class_num = 1..11; class_let = ["A", "B", "C"]%>
+    <%= f.label "If you're a student, please choose your class" %>
+    <div class="row justify-content-around">
+    <%= f.select :classnum, class_num, {:include_blank => true}, {class: "col-md-5  custom-select"}%>
+    <%= f.select :classlet, class_let, {:include_blank => true}, {class: "col-md-5  custom-select"}%>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Sign up", class: "btn btn-outline-primary btn-block mt-3 mb-3"  %>
+  </div>
+<% end %>
+</div>
+<%= render "devise/shared/links" %>
+
+<script>
+  const class_choose_el = document.querySelector(".choosing_class")
+  class_choose_el.style.display = "none"
+  let chosen_classnum = document.querySelector("#student_classnum")
+  let chosen_classlet = document.querySelector("#student_classlet")
+  let role = document.querySelector("#student_role")
+  role.onchange = function(){
+    if (role.value != "Student"){
+      class_choose_el.style.display = "none"
+      chosen_classnum.selectedIndex = "0"
+      chosen_classlet.selectedIndex = "0"
+    }  
+    else
+      class_choose_el.style.display = "block"
+  }
+</script>

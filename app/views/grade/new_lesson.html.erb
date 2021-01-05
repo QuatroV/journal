@@ -1,0 +1,63 @@
+<h1>New lesson for <%=params[:chosen_classnum]%><%=params[:chosen_classlet]%></h1>
+<%chosen_year = params[:week].first(4)%>
+<%chosen_week = params[:week].last(2)%>
+<%chosen_week.slice!(0)  if chosen_week.first == "0"%>
+<%chosen_day = Date.commercial(chosen_year.to_i, chosen_week.to_i, params[:day].to_i)%>
+<%chosen_pos = params[:pos]%>
+<p>Date: <%= chosen_day%>, number of the lesson: <%=chosen_pos%><p>
+<hr width="300"/>
+<form class="col-md-4 offset-md-4" action = "<%= grade_create_lesson_url %>">
+    <div class="mt-3 mb-3">
+        <%kinds_of_teacher = []%>
+        <%subjects = Subject.all.map{|el| el.name} %>
+        <label class = "form-label">Subject: </label>
+        <%= select :subjects, :chosen_subject , subjects, {:include_blank => true},{class: "form-control"} %>
+    </div>
+    <div class="mt-3 mb-3">
+        <label class = "form-label">Homework: </label>
+        <textarea class = "homework form-control"></textarea>
+    </div>
+    <div class="choosing_teacher mt-3 mb-3" style="display: none;">
+        <label class = "form-label">Teacher: </label>
+        <select id="available_teachers" class = "form-control"><select>
+    </div>
+    <a href="<%= root_url %>" style="text-decoration: none;"><button class = "submit btn btn-outline-primary btn-block mt-3 mb-3">Create lesson</button></a>
+  </form>
+<script>
+    const choosing_teacher = document.querySelector(".choosing_teacher") 
+    let subj = document.querySelector("#subjects_chosen_subject")
+    subj.onchange = function(){
+        choosing_teacher.style.display = "block"
+        let param_str = "subject=" + subj.value
+        let http_request = new XMLHttpRequest()
+        http_request.open("GET", "<%= grade_get_teachers_url %>" + "?" + param_str+ "&format=json")
+        http_request.onreadystatechange = function () {
+            if (http_request.readyState == 4 && http_request.status == 200) 
+                generate_select(JSON.parse(http_request.responseText).result);
+            }
+        http_request.send();  
+    }
+    function generate_select(data){
+        let teacher_selector = document.querySelector("#available_teachers")
+        teacher_selector.innerHTML = ""
+        for (i = 0; i < data.length; i++)
+            teacher_selector.insertAdjacentHTML('beforeend',`<option value="${data[i][1]}">${data[i][0]}</option>`) 
+    }
+    const submit_btn = document.querySelector(".submit")
+    submit_btn.onclick = function(){
+        param_str = ""
+        param_str += "&day=" + "<%=chosen_day%>"
+        param_str += "&pos=" + "<%=chosen_pos%>"
+        param_str += "&subject=" + subj.value
+        param_str += "&homework=" + document.querySelector(".homework").value
+        param_str += "&classnum=" + "<%=params[:chosen_classnum]%>"
+        param_str += "&classlet=" + "<%=params[:chosen_classlet]%>"
+        param_str += "&teacher_id=" + document.querySelector("#available_teachers").value
+        let http_request = new XMLHttpRequest()
+        http_request.open("POST", "<%= grade_create_lesson_path %>")
+        http_request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        http_request.send(param_str);
+    }
+</script>
+
+  

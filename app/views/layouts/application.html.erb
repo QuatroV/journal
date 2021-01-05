@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<%= stylesheet_link_tag "journal_styles" %>
+  <head>
+    <title>.Journal</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <style>
+      body { background: repeating-linear-gradient(45deg, #EECFBA, #C5DDE8) no-repeat; background-size: 100%; min-height:100vh}
+    </style>
+    <%= favicon_link_tag asset_path('/Favicon.png') %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+  <a class="navbar-brand mb-0" href="<%=root_url%>"><img src="/brand_icon.png" width="40" height="40" alt=".Journal"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <% if !current_student.nil? %>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <% if current_student.role then%>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item ">
+            <a class="nav-link" href="<%= root_url %>">Schedule<span class="sr-only">(current)</span></a>
+          </li>
+          <% if current_student.role == "Student" || current_student.role.include?("Teacher") then%>
+            <li class="nav-item ">
+              <% if current_student.role == "Student" then%>
+                <% link = grade_show_all_grades_path + "?student_id=" + current_student.id.to_s %>
+                <% text = "Academic performance"%>
+              <% else %>
+                <% link = grade_show_all_grades_for_teacher_path + "?student_id=" + current_student.id.to_s%>
+                <% text = "Academic performance of students"%>
+              <% end %>
+              <a class="nav-link" href=<%=link%>><%=text%></a>
+            </li>
+          <% elsif current_student.role == "Administrator" %>
+            <li class="nav-item ">
+              <a class="nav-link" href="<%= grade_show_all_students_url %>">Students<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link" href="<%= grade_show_all_teachers_url %>">Teachers<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link" href="<%= grade_show_all_subjects_url %>">Subjects<span class="sr-only">(current)</span></a>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+      <span class = "mr-auto"></span>
+      <span class="navbar-text">
+        <%=current_student.name%>, <%=current_student.role.downcase%> 
+        <% if current_student.role == "Student" %>
+        <%="of " + current_student.classnum.to_s + current_student.classlet + " grade"%>
+        <%end%>
+      </span>
+      <%= link_to 'Sign out', destroy_student_session_path, method: :delete, class: "nav-link"%>
+    </div>
+  <% end %>
+</nav>
+  <div class="container">
+    <div class="row m-md-3">
+      <div class="bg-white col-lg-12 rounded m-lg-5 p-lg-5 justify-content-center text-center shadow p-3" >
+      <% if notice or alert then %>
+        <div class="alert alert-primary alert-dismissible fade show col-md-6 offset-md-3 justify-content-center" role="alert">
+              <%= notice %><%= alert %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <% end %>
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+  </body>
+  <script>
+
+  </script>
+</html>

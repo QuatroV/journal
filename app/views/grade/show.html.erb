@@ -1,0 +1,183 @@
+<h1 class = "text-center">Schedule</h1>
+<hr width="500"/>
+<div class="form-row align-items-center mx-auto mb-3 mt-4">
+    <div class="col justify-content-center">
+        <label class="mr-md-2 mb-0" >Choose the week<%=" and class" if current_student.role == "Administrator"%> to see the schedule:</label>
+    </div>
+    <%if current_student.role  == "Administrator" then%>
+        <div class="col-1">
+            <% class_num = 1..11%>
+            <%= select :classnums, :classnum, class_num, {:include_blank => true}, {class: "form-control"} %>
+        </div>
+        <div class="col-1">
+            <% class_let = ["A", "B", "C"]%>
+            <%= select :classlets, :classlet, class_let, {:include_blank => true}, {class: "form-control"}%>
+        </div>
+    <% end %>
+    <div class="col">
+        <% week = Date.today.cweek.to_s%>
+        <% if week.to_i < 10 then%>
+            <% week.insert(0, "0")%>
+        <% end %>
+        <input type="week" id="week" value="<%=Date.today.beginning_of_week.year.to_s + "-W" + week%>" class="form-control">
+    </div>
+    <div class="col">
+        <input type="button" id="show_timetable" value="Show" class="btn btn-outline-primary btn-block">
+    </div>
+</div>
+
+<div class="timetable">
+    <% arrayOfWeekdays = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"] %>
+    <% lesson_amount = 7 %>
+    <% arrayOfWeekdays.each_with_index do |day,day_num| %>
+        <% num = "table" + day_num.to_s %>
+        <h3 class="mb-3"><%=day%></h3>
+        <table class="table table-bordered table-hover" id="<%=num%>">
+            <thead class="thead-light">
+                <tr>
+                    <th></th>
+                    <th>Subject</th>
+                    <th>Homework</th>
+                    <% if current_student.role == "Student" then %>
+                        <th>Mark</th>
+                        <th>Teacher</th>
+                    <% elsif current_student.role.include? "Teacher" %>
+                        <th>Class</th>
+                        <th>Link</th>
+                    <% else %>
+                        <th>Teacher</th>
+                        <th></th>
+                    <%end%>
+                </tr>
+            </thead>
+            <%lesson_amount.times do |i|%>
+                <tr> 
+                    <td><%=i+1%></td> 
+                    <td id = "subject<%=day_num%><%=i%>"></td> 
+                    <td id = "homework<%=day_num%><%=i%>"></td>
+                    <%if current_student.role == "Student" then%>
+                        <td id = "mark<%=day_num%><%=i%>"></td> 
+                        <td id = "teacher<%=day_num%><%=i%>"></td>
+                    <%elsif current_student.role.include? "Teacher"%>
+                        <td id = "class<%=day_num%><%=i%>"></td> 
+                        <td id = "link<%=day_num%><%=i%>"></td>
+                    <% else %>
+                        <td id = "teacher<%=day_num%><%=i%>"></td>
+                        <td id = "action<%=day_num%><%=i%>"></td>
+                    <%end%> 
+                </tr>
+            <%end%>
+        </table>
+    <%end%>    
+</div>
+
+<script>
+    function show_weekly_timetable(){
+        if (document.querySelector("#week").value != null){
+            let param_str = "chosen_week=" + document.querySelector("#week").value
+                if ("<%=current_student.role%>" === "Administrator"){
+                    param_str += "&chosen_classnum=" + document.querySelector("#classnums_classnum").value 
+                    param_str += "&chosen_classlet=" + document.querySelector("#classlets_classlet").value
+                }    
+            let JSON_timetable = {}
+            let http_request = new XMLHttpRequest()
+            http_request.open("GET", "<%= grade_show_timetable_url %>" + "?" + param_str  + "&format=json")
+            http_request.onreadystatechange = function () {
+                if (http_request.readyState == 4 && http_request.status == 200) {
+                    JSON_timetable = JSON.parse(http_request.responseText);
+                    show_timetable(JSON_timetable.result);
+                }
+        }
+        http_request.send();  
+        }  
+    }
+    if ("<%=current_student.role%>" != "Administrator")
+        document.addEventListener("turbolinks:load", show_weekly_timetable)
+    document.querySelector("#show_timetable").onclick = show_weekly_timetable
+    function show_timetable(data){
+        cells = document.querySelectorAll("td[id]")
+        for (i = 0; i < cells.length; i++)
+            cells[i].innerHTML = ""
+        const current_role = "<%=current_student.role%>"
+        if (current_role == "Student")
+            for (j = 0; j < data.length; j++){
+                lessons = data[j][0]
+                marks = data[j][1]
+                teachers = data[j][2]
+                draw_table_with_marks(lessons, marks, teachers, j)
+            }
+        else if (current_role.includes("Teacher"))
+            for (j = 0; j < data.length; j++){
+                lessons = data[j]
+                draw_table_without_marks(lessons, j)
+            }
+        else if (current_role == "Administrator"){
+            for (j = 0; j < data.length; j++){
+                lessons = data[j][0]
+                teachers = data[j][1]
+                draw_table_for_admin(lessons, j)
+            }
+            empty_actions = document.querySelector('td[id ="action"]')
+            console.log(empty_actions)
+        }   
+    }
+    function draw_table_with_marks(lessons, marks, teachers, day){
+        if (lessons != null)
+            for (let i = 0; i < lessons.length; ++i)
+            { 
+                pos = lessons[i].pos - 1
+                subject_place = document.querySelector(`#subject${day}${pos}`)
+                homework_place = document.querySelector(`#homework${day}${pos}`)
+                mark_place = document.querySelector(`#mark${day}${pos}`)
+                teacher_place = document.querySelector(`#teacher${day}${pos}`)
+                subject_place.innerHTML = lessons[i].subject
+                homework_place.innerHTML = lessons[i].homework
+                mark_place.innerHTML = marks[i]
+                teacher_place.innerHTML = teachers[i]
+            }
+    }
+    function draw_table_without_marks(lessons, day){
+        if (lessons != null)
+            for (let i = 0; i < lessons.length; ++i)
+            {
+                pos = lessons[i].pos - 1
+                subject_place = document.querySelector(`#subject${day}${pos}`)
+                homework_place = document.querySelector(`#homework${day}${pos}`)
+                class_place = document.querySelector(`#class${day}${pos}`)
+                link_place = document.querySelector(`#link${day}${pos}`)
+                subject_place.innerHTML = lessons[i].subject
+                homework_place.innerHTML = lessons[i].homework
+                class_place.innerHTML = lessons[i].classnum + lessons[i].classlet
+                lesson_url = "<%= root_url %>" + "grade/show_lesson/" + lessons[i].id;
+                link_place.innerHTML = `<a href=${lesson_url}>To this lesson</a>`
+            }
+    }
+    function draw_table_for_admin(lessons, day){
+        if (lessons != null)
+            for (let i = 0; i < lessons.length; ++i)
+            {
+                pos = lessons[i].pos - 1
+                subject_place = document.querySelector(`#subject${day}${pos}`)
+                homework_place = document.querySelector(`#homework${day}${pos}`)
+                teacher_place = document.querySelector(`#teacher${day}${pos}`)
+                action_place = document.querySelector(`#action${day}${pos}`)
+                subject_place.innerHTML = lessons[i].subject
+                homework_place.innerHTML = lessons[i].homework
+                teacher_place.innerHTML = teachers[i]
+                lesson_url = "<%= root_url %>" + "grade/show_lesson/" + lessons[i].id;
+                action_place.innerHTML = `<a href=${lesson_url}>Edit lesson</a>`
+            }
+            for (let i = 0; i < 7; ++i){
+                if (!document.querySelector(`#action${day}${i}`).innerHTML){
+                    chosen_week = document.querySelector("#week").value
+                    chosen_day = day + 1
+                    param_str = "?week="+chosen_week+"&day="+chosen_day+"&pos="+ (i+1)
+                    param_str += "&chosen_classnum=" + document.querySelector("#classnums_classnum").value 
+                    param_str += "&chosen_classlet=" + document.querySelector("#classlets_classlet").value
+                    document.querySelector(`#action${day}${i}`).innerHTML = `<a href="<%=grade_new_lesson_url%>${param_str}" data-turbolinks="false">New lesson</a>`
+                }
+                    
+            }
+    }
+
+</script>

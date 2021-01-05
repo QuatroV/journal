@@ -1,0 +1,20 @@
+<h1>All teachers</h1>
+<hr width="500"/>
+<div class = "all_teachers">
+    <table class = "table table-bordered table-hover ac_performance">
+        <thead class="thead-light">
+            <th> Teacher </th>
+            <th> Subject </th>
+            <th> Classes </th>
+        </thead>
+        <% teachers = Student.where(id: Lesson.all.group(:teacher_id, :subject).to_a.map{|el|el.teacher_id})%>
+        <% teachers.each do |teacher|%>
+        <tr>
+            <td> <%= teacher.name %> </td>
+            <td> <%= teacher.role %></td>
+            <% current_teacher_classes = Lesson.order(classnum: :asc, classlet: :asc).where(teacher_id: teacher.id).group(:classnum, :classlet).to_a.map{|el|el.classnum.to_s+el.classlet.to_s}%>
+            <td> <%=current_teacher_classes * ", "%> </td>
+        </tr>
+        <% end %>
+    </table>
+</div>
