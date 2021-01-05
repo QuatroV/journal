@@ -14,7 +14,7 @@
             <td> <%= teacher.role %></td>
             <% current_teacher_lessons = Lesson.order(classnum: :asc, classlet: :asc).where(teacher_id: teacher.id)%>
             <% current_teacher_classes = [].to_set %>
-            <% current_teacher_lessons.each_with_index do |el, i|%>
+            <% current_teacher_lessons.each do |el|%>
                 <% current_class = el.classnum.to_s+el.classlet.to_s %>
                 <% current_teacher_classes.add(current_class) %>
             <% end %>

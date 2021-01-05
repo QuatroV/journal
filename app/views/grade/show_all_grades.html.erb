@@ -12,7 +12,6 @@
         <tr>
             <td> <%= subj.name %> </td>
             <td>
-            <%  %>
             <%= Student.where(id: Lesson.where(subject: subj.name, classlet: current_student.classlet,subject: subj.name).map{|el|el.teacher_id}).map{|el|el.name} * ", "%></td>
             <% all_lessons_id = Lesson.where(classnum: current_student.classnum, classlet: current_student.classlet,subject: subj.name).to_a.map{|el| el.id} %>
             <% grades = Grade.where(student_id:current_student.id, lesson_id: all_lessons_id).to_a.map{|el| el.value}%>

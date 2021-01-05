@@ -6,7 +6,12 @@
         <label class="mr-md-2 mb-0" >Choose the class to see students: </label>
     </div>
     <div class="col">
-        <% current_teacher_classes = Lesson.order(classnum: :asc, classlet: :asc).group(:classnum, :classlet).to_a.map{|el|el.classnum.to_s+el.classlet.to_s}%>
+        <% current_teacher_lessons = Lesson.order(classnum: :asc, classlet: :asc)%>
+        <% current_teacher_classes = [].to_set %>
+        <% current_teacher_lessons.each do |el|%>
+            <% current_class = el.classnum.to_s+el.classlet.to_s %>
+            <% current_teacher_classes.add(current_class) %>
+        <% end %>
         <%= select :choosing_class, :chosen_class, current_teacher_classes, {:include_blank => true}, {class: "form-control"}%>
     </div>
     <div class="col">
