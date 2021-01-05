@@ -12,9 +12,14 @@
         <tr>
             <td> <%= teacher.name %> </td>
             <td> <%= teacher.role %></td>
-            <%current_teacher_lessons = Lesson.order(classnum: :asc, classlet: :asc).where(teacher_id: teacher.id)%>
-            <% current_teacher_classes = Lesson.order(classnum: :asc, classlet: :asc).where(teacher_id: teacher.id).group(:classnum).to_a.map{|el|el.classnum.to_s+el.classlet.to_s}%>
-            <td> <%=current_teacher_classes * ", "%> </td>
+            <% current_teacher_lessons = Lesson.order(classnum: :asc, classlet: :asc).where(teacher_id: teacher.id)%>
+            <% current_teacher_classes = [].to_set %>
+            <% current_teacher_lessons.each_with_index do |el, i|%>
+                <% current_class = el.classnum.to_s+el.classlet.to_s %>
+                <% current_teacher_classes.add(current_class) %>
+            <% end %>
+            
+            <td> <%=current_teacher_classes.to_a * ", "%> </td>
         </tr>
         <% end %>
     </table>
