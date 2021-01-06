@@ -1,11 +1,21 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  value: 1
+  value: 5
   student: one
   lesson: one
 
 two:
-  value: 1
-  student: two
+  value: 2
+  student: one
   lesson: two
+
+three:
+  value: 3
+  student: two
+  lesson: one
+
+three:
+  value: 5
+  student: three
+  lesson: three

@@ -6,7 +6,8 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <style>
-      body { background: repeating-linear-gradient(45deg, #EECFBA, #C5DDE8) no-repeat; background-size: 100%; min-height:100vh}
+      body { background: repeating-linear-gradient(45deg, #EECFBA, #C5DDE8)
+        no-repeat; background-size: 100%; min-height:100vh}
     </style>
     <%= favicon_link_tag asset_path('/Favicon.png') %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -59,9 +60,9 @@
       </span>
       <%= link_to t('global.sign_out'), destroy_student_session_path, method: :delete, class: "nav-link"%>
       <% if I18n.locale == I18n.default_locale %>
-        <%= link_to image_tag("/language-24px.svg"), { :locale=>'ru' } %>
+        <%= link_to image_tag("/language-24px.svg"), root_url(:locale=>'ru') %>
       <% else %>
-        <%= link_to image_tag("/language-24px.svg"), { :locale=>'en' } %>
+        <%= link_to image_tag("/language-24px.svg"), root_url(:locale=>'en') %>
       <%end%>
     </div>
   <% end %>

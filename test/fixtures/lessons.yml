@@ -1,19 +1,28 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  day: 2020-12-31
+  day: 2020-01-04
   pos: 1
-  subject: MyString
-  homework: MyString
-  classnum: 1
-  classlet: MyString
-  teacher_id: one
+  subject: Math
+  homework: Test Homework 1
+  classnum: 7
+  classlet: A
+  teacher_id: 4
 
 two:
-  day: 2020-12-31
+  day: 2020-01-04
+  pos: 2
+  subject: History
+  homework: Test Homework 2
+  classnum: 7
+  classlet: A
+  teacher_id: 5
+
+three:
+  day: 2020-01-04
   pos: 1
-  subject: MyString
-  homework: MyString
-  classnum: 1
-  classlet: MyString
-  teacher_id: two
+  subject: History
+  homework: Test Homework 3
+  classnum: 7
+  classlet: B
+  teacher_id: 5

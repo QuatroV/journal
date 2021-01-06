@@ -4,8 +4,45 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
+one:
+  email: test@example.org
+  name: Test Student 1
+  role: Student
+  classnum: 7
+  classlet: A
 #
-two: {}
+two:
+  email: test2@example.org
+  name: Test Student 2
+  role: Student
+  classnum: 7
+  classlet: A
+#
+three:
+  email: test3@example.org
+  name: Test Student 3
+  role: Student
+  classnum: 7
+  classlet: B
+#
+four:
+  email: math@example.org
+  name: Test Teacher Math
+  role: Math Teacher
+  classnum: nil
+  classlet: nil
+#
+five:
+  email: history@example.org
+  name: Test Teacher History
+  role: History Teacher
+  classnum: nil
+  classlet: nil
+#
+six:
+  email: admin@example.org
+  name: Test Admin
+  role: Administrator
+  classnum: nil
+  classlet: nil
 # column: value

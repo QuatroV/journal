@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateLessons < ActiveRecord::Migration[6.0]
   def change
     create_table :lessons do |t|
@@ -8,7 +10,7 @@ class CreateLessons < ActiveRecord::Migration[6.0]
       t.integer :classnum, null: false
       t.string :classlet, null: false
       t.integer :teacher_id, null: false
-      
+
       t.timestamps
     end
   end

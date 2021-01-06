@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  scope "(:locale)", locale: /#{I18n.available_locales.join("|")}/ do
+  scope '(:locale)', locale: /#{I18n.available_locales.join("|")}/ do
     # timetable
     root 'timetable#show'
     get 'timetable/show_timetable'
@@ -25,6 +27,8 @@ Rails.application.routes.draw do
     post 'subject/add_subject'
     get 'subject/delete_subject'
     devise_for :students
+    # if route not found
+    get '*path' => redirect('/')
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

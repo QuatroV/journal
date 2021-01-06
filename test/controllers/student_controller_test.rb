@@ -1,7 +1,12 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class StudentControllerTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
+
+  test 'unauthorized user will be redirected to login page' do
+    get root_url
+    assert_redirected_to new_student_session_path
+  end
+  
 end
