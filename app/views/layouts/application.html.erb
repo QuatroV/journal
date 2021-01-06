@@ -39,13 +39,13 @@
             </li>
           <% elsif current_student.role == "Administrator" %>
             <li class="nav-item ">
-              <a class="nav-link" href="<%= grade_show_all_students_url %>">Students<span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="<%= student_show_all_students_url %>">Students<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item ">
-              <a class="nav-link" href="<%= grade_show_all_teachers_url %>">Teachers<span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="<%= teacher_show_all_teachers_url %>">Teachers<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item ">
-              <a class="nav-link" href="<%= grade_show_all_subjects_url %>">Subjects<span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="<%= subject_show_all_subjects_url %>">Subjects<span class="sr-only">(current)</span></a>
             </li>
           <% end %>
         </ul>
