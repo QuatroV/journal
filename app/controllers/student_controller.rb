@@ -1,5 +1,7 @@
 class StudentController < ApplicationController
 
+    before_action :current_student_is_admin?, :only => [:show_all_students, :get_all_students]
+
     def show_all_students
     end 
 

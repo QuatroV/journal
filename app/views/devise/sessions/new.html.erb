@@ -1,24 +1,24 @@
-<h2>Log in</h2>
+<h2><%= t('devise.sessions.log_in')%></h2>
 <hr width="300"/>
 <div class="col-md-4 offset-md-4">
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="field mt-3 mb-3">
-    <%= f.email_field :email, autocomplete: "email", class:"form-control", placeholder: "e-mail"%>
+    <%= f.email_field :email, autocomplete: "email", class:"form-control", placeholder: t('devise.sessions.email')%>
   </div>
 
   <div class="field mt-3 mb-3">
-    <%= f.password_field :password, autocomplete: "current-password" , class:"form-control", placeholder: "password"%>
+    <%= f.password_field :password, autocomplete: "current-password" , class:"form-control", placeholder: t('devise.sessions.password')%>
   </div>
 
   <% if devise_mapping.rememberable? %>
     <div class="field custom-control custom-checkbox my-1 mr-sm-2">
       <%= f.check_box :remember_me, class: "custom-control-input" %>
-      <%= f.label :remember_me, class: "custom-control-label " %>
+      <%= f.label t('devise.sessions.remember_me'), class: "custom-control-label " %>
     </div>
   <% end %>
 
   <div class="actions">
-    <%= f.submit "Log in", class: "btn btn-outline-primary btn-block mt-3 mb-3" %>
+    <%= f.submit t('devise.sessions.log_in_submit'), class: "btn btn-outline-primary btn-block mt-3 mb-3" %>
   </div>
 <% end %>
 

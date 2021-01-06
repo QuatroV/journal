@@ -1,35 +1,122 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at https://guides.rubyonrails.org/i18n.html.
-
 en:
-  grade:
+  global:
+    schedule: "Schedule"
+    ac_performance: "Academic performance"
+    ac_performance_teach: "Academic performance of students"
+    all_students: "Students"
+    all_teachers: "Teachers"
+    all_subjects: "Subjects"
+    sign_out: "Sign out"
+    of: " of "
+    grade: " grade"
+    roles:
+      administrator: "administrator"
+      student: "student"
+      math teacher: "math teacher"
+      history teacher: "history teacher"
+      art teacher: "art teacher"
+      geography teacher: "geography teacher"
+      it teacher: "it teacher"
+      english teacher: "english teacher"
+      russian teacher: "russian teacher"
+      music teacher: "music teacher"
+      pe teacher: "pe teacher"
+      physics teacher: "physics teacher"
+      biology teacher: "biology teacher"
+      chemistry teacher: "chemistry teacher"
+      literature teacher: "literature teacher"
+      science teacher: "science teacher"
+      geometry teacher: "geometry teacher"
+  timetable:
     show:
       schedule: "Schedule"
+      choose_week: "Chose the week"
+      and_class: " and class"
+      to_see_the_schedule: ", to see the schedule"
+      show_button: "Show"
+      monday: "Monday"
+      tuesday: "Tuesday"
+      wednesday: "Wednesday"
+      thursday: "Thursday"
+      friday: "Friday"
+      saturday: "Saturday"
+      sunday: "Sunday"
+      subject: "Subject"
+      homework: "Homework"
+      mark: "Mark"
+      teacher: "Teacher"
+      class: "Class"
+      link: "Link"
+      edit_lesson: "Edit lesson"
+      new_lesson: "New lesson"
+      to_lesson: "To this lesson"
+  grade:
+    show_all_grades:
+      ac_performance: "Academic performance"
+      subject: "Subject"
+      marks: "Marks"
+      teachers: "Teachers"
+      average: "Average"
+    show_all_grades_for_teacher:
+      ac_performance: "Academic performance of students"
+      choose_class: "Choose the class to see student marks:"
+      student: "Student"
+      marks: "Marks"
+      average: "Average"
+      show: "Show"
+  lesson:
+    new_lesson:
+      new_lesson_for: "New lesson for"
+      date: "Date: "
+      num_of_lesson: ", number of the lesson: "
+      subject: "Subject:"
+      homework: "Homework:" 
+      teacher: "Teacher:"
+      create_lesson: "Create lesson" 
+    show_lesson:
+      lesson_in: "Lesson in"
+      date: "Date: "
+      num_of_lesson: ", number of the lesson: "
+      teacher: "Teacher"
+      student: "Student"
+      mark: "Mark"
+      homework: "Homework: "
+      grades: "Grades: "
+      update: "Update"
+      delete_lesson: "Delete lesson"
+      no_homework: "There are no homework for that lesson yet"
+      back: "Back to timetable"
+      subjects:
+        Math: "Math"
+        History: "History"
+        Art: "Art"
+        Geography: "Geography"
+        IT: "IT"
+        English: "English"
+        Russian: "Russian"
+        Music: "Music"
+        PE: "PE"
+        Physics: "Physics"
+        Biology: "Biology"
+        Chemistry: "Chemistry"
+        Literature: "Literature"
+        Science: "Science"
+        Geometry: "Geometry"
+  student:
+    show_all_students:
+      all_students: "All students"
+      choose_class: "Choose the class to see students: "
+      show: "Show"
+      student: "Student"
+  teacher:
+    show_all_teachers:
+      all_teachers: "All teachers"
+      teacher: "Teacher"
+      subject: "Subject"
+      classes: "Classes"
+  subject:
+    show_all_subjects:
+      all_subjects: "All subjects"
+      add_subject: "Add new subject:"
+      subject: "Subject"
+      subject_name: "Subject name"

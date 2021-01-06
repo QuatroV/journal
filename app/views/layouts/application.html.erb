@@ -24,40 +24,45 @@
       <% if current_student.role then%>
         <ul class="navbar-nav mr-auto">
           <li class="nav-item ">
-            <a class="nav-link" href="<%= root_url %>">Schedule<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="<%= root_url %>"><%=t 'global.schedule'%><span class="sr-only">(current)</span></a>
           </li>
           <% if current_student.role == "Student" || current_student.role.include?("Teacher") then%>
             <li class="nav-item ">
               <% if current_student.role == "Student" then%>
-                <% link = grade_show_all_grades_path + "?student_id=" + current_student.id.to_s %>
-                <% text = "Academic performance"%>
+                <% link = grade_show_all_grades_path%>
+                <% text = t "global.ac_performance"%>
               <% else %>
-                <% link = grade_show_all_grades_for_teacher_path + "?student_id=" + current_student.id.to_s%>
-                <% text = "Academic performance of students"%>
+                <% link = grade_show_all_grades_for_teacher_path%>
+                <% text = t "global.ac_performance_teach"%>
               <% end %>
               <a class="nav-link" href=<%=link%>><%=text%></a>
             </li>
           <% elsif current_student.role == "Administrator" %>
             <li class="nav-item ">
-              <a class="nav-link" href="<%= student_show_all_students_url %>">Students<span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="<%= student_show_all_students_url %>"><%=t 'global.all_students'%><span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item ">
-              <a class="nav-link" href="<%= teacher_show_all_teachers_url %>">Teachers<span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="<%= teacher_show_all_teachers_url %>"><%=t 'global.all_teachers'%><span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item ">
-              <a class="nav-link" href="<%= subject_show_all_subjects_url %>">Subjects<span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="<%= subject_show_all_subjects_url %>"><%=t 'global.all_subjects'%><span class="sr-only">(current)</span></a>
             </li>
           <% end %>
         </ul>
       <% end %>
       <span class = "mr-auto"></span>
       <span class="navbar-text">
-        <%=current_student.name%>, <%=current_student.role.downcase%> 
+        <%=current_student.name%>, <%= t('global.roles.'+current_student.role.downcase)%> 
         <% if current_student.role == "Student" %>
-        <%="of " + current_student.classnum.to_s + current_student.classlet + " grade"%>
+        <%= t("global.of") + current_student.classnum.to_s + current_student.classlet + t("global.grade")%>
         <%end%>
       </span>
-      <%= link_to 'Sign out', destroy_student_session_path, method: :delete, class: "nav-link"%>
+      <%= link_to t('global.sign_out'), destroy_student_session_path, method: :delete, class: "nav-link"%>
+      <% if I18n.locale == I18n.default_locale %>
+        <%= link_to image_tag("/language-24px.svg"), { :locale=>'ru' } %>
+      <% else %>
+        <%= link_to image_tag("/language-24px.svg"), { :locale=>'en' } %>
+      <%end%>
     </div>
   <% end %>
 </nav>

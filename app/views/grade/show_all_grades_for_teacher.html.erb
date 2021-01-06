@@ -1,8 +1,8 @@
-<h1>Academic performance of students</h1>
+<h1><%= t '.ac_performance'%></h1>
 <hr width="500"/>
 <div class="form-row align-items-center mx-auto mb-3 mt-4">
     <div class="col justify-content-center">
-        <label class="mr-md-2 mb-0" >Choose the class to see student marks:</label>
+        <label class="mr-md-2 mb-0" ><%=t '.choose_class'%></label>
     </div>
     <div class="col">
         <% current_teacher_lessons = Lesson.order(classnum: :asc, classlet: :asc).where(teacher_id: current_student.id)%>
@@ -14,7 +14,7 @@
         <%= select :choosing_class, :chosen_class, current_teacher_classes, {:include_blank => true}, {class: "form-control"}%>
     </div>
     <div class="col">
-        <input type="button" id="show_marks" value="Show" class="btn btn-outline-primary btn-block">
+        <input type="button" id="show_marks" value="<%=t '.show'%>" class="btn btn-outline-primary btn-block">
     </div>
 </div>
 <div class = "all_grades">
@@ -40,7 +40,7 @@
         table_place = document.querySelector(".all_grades")
         table_place.innerHTML = ""
         table_place.insertAdjacentHTML('beforeend',`<h3 class="mb-3">${data[0]}</h3>
-            <table class="table table-bordered table-hover ac_performance"><thead class="thead-light"><tr><th>Student</th><th>Marks</th><th>Average</th></tr>`)
+            <table class="table table-bordered table-hover ac_performance"><thead class="thead-light"><tr><th><%=t '.student'%></th><th><%=t '.marks'%></th><th><%=t '.average'%></th></tr>`)
         table_place = document.querySelector(".ac_performance")
         for (i = 1; i < data.length; i++){
             let average = 0.0

@@ -1,9 +1,6 @@
 class GradeController < ApplicationController
   before_action :current_student_is_student?, :only => [:show_all_grades]
   before_action :current_student_is_teacher?, :only => [:show_all_grades_for_teacher, :get_marks_for_class]
-  before_action :current_student_is_admin?, :only => [:show_all_subjects, :delete_lesson, :new_lesson, :create_lesson, :get_teachers, :add_subject, :delete_subject, :show_all_students, :show_all_teachers, :get_all_students]
-  before_action :current_student_is_teacher_or_admin?, :only => [:show_lesson, :update_grades, :update_homework]
-  before_action :correct_subject?, :only => [:show_lesson, :update_grades, :update_homework]
 
   def show_all_grades
   end

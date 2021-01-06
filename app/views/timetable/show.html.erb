@@ -1,8 +1,8 @@
-<h1 class = "text-center"><%= t 'schedule' %></h1>
+<h1 class = "text-center"><%= t '.schedule' %></h1>
 <hr width="500"/>
 <div class="form-row align-items-center mx-auto mb-3 mt-4">
     <div class="col justify-content-center">
-        <label class="mr-md-2 mb-0" >Choose the week<%=" and class" if current_student.role == "Administrator"%> to see the schedule:</label>
+        <label class="mr-md-2 mb-0" ><%=t('.choose_week')%><%=t('.and_class') if current_student.role == "Administrator"%><%=t('.to_see_the_schedule')%>:</label>
     </div>
     <%if current_student.role  == "Administrator" then%>
         <div class="col-1">
@@ -22,12 +22,12 @@
         <input type="week" id="week" value="<%=Date.today.beginning_of_week.year.to_s + "-W" + week%>" class="form-control">
     </div>
     <div class="col">
-        <input type="button" id="show_timetable" value="Show" class="btn btn-outline-primary btn-block">
+        <input type="button" id="show_timetable" value="<%=t('.show_button')%>" class="btn btn-outline-primary btn-block">
     </div>
 </div>
 
 <div class="timetable">
-    <% arrayOfWeekdays = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"] %>
+    <% arrayOfWeekdays = [t('.monday'),t('.tuesday'),t('.wednesday'),t('.thursday'),t('.friday'),t('.saturday'),t('.sunday')] %>
     <% lesson_amount = 7 %>
     <% arrayOfWeekdays.each_with_index do |day,day_num| %>
         <% num = "table" + day_num.to_s %>
@@ -36,16 +36,16 @@
             <thead class="thead-light">
                 <tr>
                     <th></th>
-                    <th>Subject</th>
-                    <th>Homework</th>
+                    <th><%=t '.subject'%></th>
+                    <th><%=t '.homework'%></th>
                     <% if current_student.role == "Student" then %>
-                        <th>Mark</th>
-                        <th>Teacher</th>
+                        <th><%=t '.mark'%></th>
+                        <th><%=t '.teacher'%></th>
                     <% elsif current_student.role.include? "Teacher" %>
-                        <th>Class</th>
-                        <th>Link</th>
+                        <th><%=t '.class'%></th>
+                        <th><%=t '.link'%></th>
                     <% else %>
-                        <th>Teacher</th>
+                        <th><%=t '.teacher'%></th>
                         <th></th>
                     <%end%>
                 </tr>
@@ -148,8 +148,8 @@
                 subject_place.innerHTML = lessons[i].subject
                 homework_place.innerHTML = lessons[i].homework
                 class_place.innerHTML = lessons[i].classnum + lessons[i].classlet
-                lesson_url = "<%= root_url %>" + "lesson/show_lesson/" + lessons[i].id;
-                link_place.innerHTML = `<a href=${lesson_url}>To this lesson</a>`
+                lesson_url = "<%= root_url %>" + "/lesson/show_lesson/" + lessons[i].id;
+                link_place.innerHTML = `<a href=${lesson_url}><%= t '.to_lesson'%></a>`
             }
     }
     function draw_table_for_admin(lessons, day){
@@ -164,8 +164,8 @@
                 subject_place.innerHTML = lessons[i].subject
                 homework_place.innerHTML = lessons[i].homework
                 teacher_place.innerHTML = teachers[i]
-                lesson_url = "<%= root_url %>" + "lesson/show_lesson/" + lessons[i].id;
-                action_place.innerHTML = `<a href=${lesson_url}>Edit lesson</a>`
+                lesson_url = "<%= root_url %>" + "/lesson/show_lesson/" + lessons[i].id;
+                action_place.innerHTML = `<a href=${lesson_url}><%= t '.edit_lesson'%></a>`
             }
             for (let i = 0; i < 7; ++i){
                 if (!document.querySelector(`#action${day}${i}`).innerHTML){
@@ -174,7 +174,7 @@
                     param_str = "?week="+chosen_week+"&day="+chosen_day+"&pos="+ (i+1)
                     param_str += "&chosen_classnum=" + document.querySelector("#classnums_classnum").value 
                     param_str += "&chosen_classlet=" + document.querySelector("#classlets_classlet").value
-                    document.querySelector(`#action${day}${i}`).innerHTML = `<a href="<%=lesson_new_lesson_url%>${param_str}" data-turbolinks="false">New lesson</a>`
+                    document.querySelector(`#action${day}${i}`).innerHTML = `<a href="<%=lesson_new_lesson_url%>${param_str}" data-turbolinks="false"><%= t '.new_lesson'%></a>`
                 }
                     
             }

@@ -1,4 +1,4 @@
-<h2>Sign up</h2>
+<h2><%= t 'devise.registrations.sign_up'%></h2>
 <hr width="300"/>
 
 <div class="col-md-4 offset-md-4">
@@ -6,32 +6,32 @@
   <%= render "devise/shared/error_messages", resource: resource %>
   
   <div class="field mt-3 mb-3">
-    <%= f.text_field :name, autofocus: true, class:"form-control", placeholder: "Your name" %>
+    <%= f.text_field :name, autofocus: true, class:"form-control", placeholder: t('devise.registrations.your_name') %>
   </div>
 
   <div class="field mt-3 mb-3">
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control", placeholder: "Your email" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control", placeholder: t('devise.registrations.email') %>
   </div>
 
   <div class="field mt-3 mb-3">
-    <%= f.password_field :password, autocomplete: "new-password", class:"form-control", placeholder: "Your password" %>
+    <%= f.password_field :password, autocomplete: "new-password", class:"form-control", placeholder: t('devise.registrations.password') %>
   </div>
 
   <div class="field">
-    <%= f.password_field :password_confirmation, autocomplete: "new-password", class:"form-control", placeholder: "Your password once more"  %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class:"form-control", placeholder: t('devise.registrations.password_confirmation')  %>
   </div>
 
   <div class = "field mt-3 mb-3">
     <%kinds_of_teacher = []%>
     <%Subject.all.each{|el| kinds_of_teacher.push(el.name+" Teacher")} %>
     <% roles = kinds_of_teacher.insert(0,"Student").push("Administrator")%>
-    <%= f.label "Who are you?", class:  "mt-1 mb-3"%>
+    <%= f.label t('devise.registrations.who_are_you'), class:  "mt-1 mb-3"%>
     <%= f.select :role, roles, {:include_blank => true}, {class: "custom-select"}%>
   </div>
 
   <div class = "choosing_class">
     <% class_num = 1..11; class_let = ["A", "B", "C"]%>
-    <%= f.label "If you're a student, please choose your class" %>
+    <%= f.label t('devise.registrations.choose_your_class') %>
     <div class="row justify-content-around">
     <%= f.select :classnum, class_num, {:include_blank => true}, {class: "col-md-5  custom-select"}%>
     <%= f.select :classlet, class_let, {:include_blank => true}, {class: "col-md-5  custom-select"}%>
@@ -39,7 +39,7 @@
   </div>
 
   <div class="actions">
-    <%= f.submit "Sign up", class: "btn btn-outline-primary btn-block mt-3 mb-3"  %>
+    <%= f.submit t('devise.registrations.sign_up_submit'), class: "btn btn-outline-primary btn-block mt-3 mb-3"  %>
   </div>
 <% end %>
 </div>

@@ -1,11 +1,11 @@
-<h1>All teachers</h1>
+<h1><%=t '.all_teachers'%></h1>
 <hr width="500"/>
 <div class = "all_teachers">
     <table class = "table table-bordered table-hover ac_performance">
         <thead class="thead-light">
-            <th> Teacher </th>
-            <th> Subject </th>
-            <th> Classes </th>
+            <th> <%=t '.teacher'%> </th>
+            <th> <%=t '.subject'%> </th>
+            <th> <%=t '.classes'%> </th>
         </thead>
         <% teachers = Student.where(id: Lesson.all.distinct(:teacher_id).to_a.map{|el|el.teacher_id})%>
         <% teachers.each do |teacher|%>
