@@ -7,6 +7,7 @@ gem 'devise'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
+gem 'rails-i18n'
 # Use sqlite3 as the database for Active Record
 group :production do
   gem 'pg'

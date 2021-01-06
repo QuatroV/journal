@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
 
      before_action :configure_permitted_parameters, if: :devise_controller?
 
+     around_action :switch_locale
+
      protected
 
           def configure_permitted_parameters
@@ -48,6 +50,11 @@ class ApplicationController < ActionController::Base
                          redirect_back(fallback_location: root_path)
                     end
                end
+          end
+
+          def switch_locale(&action)
+               locale = params[:locale] || I18n.default_locale
+               I18n.with_locale(locale, &action)
           end
 end
 
