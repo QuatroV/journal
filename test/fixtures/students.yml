@@ -5,6 +5,7 @@
 # below each fixture, per the syntax in the comments below
 #
 one:
+  id: 1 
   email: test@example.org
   name: Test Student 1
   role: Student
@@ -12,6 +13,7 @@ one:
   classlet: A
 #
 two:
+  id: 2 
   email: test2@example.org
   name: Test Student 2
   role: Student
@@ -19,6 +21,7 @@ two:
   classlet: A
 #
 three:
+  id: 3 
   email: test3@example.org
   name: Test Student 3
   role: Student
@@ -26,6 +29,7 @@ three:
   classlet: B
 #
 four:
+  id: 4
   email: math@example.org
   name: Test Teacher Math
   role: Math Teacher
@@ -33,6 +37,7 @@ four:
   classlet: nil
 #
 five:
+  id: 5 
   email: history@example.org
   name: Test Teacher History
   role: History Teacher
@@ -40,9 +45,10 @@ five:
   classlet: nil
 #
 six:
+  id: 6
   email: admin@example.org
   name: Test Admin
   role: Administrator
   classnum: nil
   classlet: nil
-# column: value
+# column: value 

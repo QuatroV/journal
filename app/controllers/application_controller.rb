@@ -46,7 +46,12 @@ class ApplicationController < ActionController::Base
   def correct_subject?
     if current_student.role.include?('Teacher')
       current_id = current_student.id
-      chosen_lesson_teacher_id = Lesson.find_by(id: params[:id]).teacher_id
+      if !(params[:id].nil?)
+        chosen_id = params[:id]
+      elsif !(params[:updated_lesson].nil?)
+        chosen_id = params[:updated_lesson]
+      end
+      chosen_lesson_teacher_id = Lesson.find_by(id: chosen_id).teacher_id
       if current_id != chosen_lesson_teacher_id
         flash[:notice] = "This page is available only for following teacher: #{Student.find_by(id: chosen_lesson_teacher_id).name}"
         redirect_back(fallback_location: root_path)

@@ -4,9 +4,18 @@ require 'test_helper'
 
 class StudentControllerTest < ActionDispatch::IntegrationTest
 
-  test 'unauthorized user will be redirected to login page' do
-    get root_url
-    assert_redirected_to new_student_session_path
+  test 'student will see his/her marks' do
+    get '/students/sign_up'
+    sign_in students(:one)
+    get '/grade/show_all_grades'
+    assert_response :success
+  end
+
+  test 'admin will see all students' do
+    get '/students/sign_up'
+    sign_in students(:six)
+    get '/student/show_all_students'
+    assert_response :success
   end
   
 end

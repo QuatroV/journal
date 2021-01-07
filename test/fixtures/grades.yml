@@ -1,21 +1,25 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   value: 5
-  student: one
-  lesson: one
+  student_id: 1
+  lesson_id: 1
 
 two:
+  id: 2
   value: 2
-  student: one
-  lesson: two
+  student_id: 1
+  lesson_id: 2
 
 three:
+  id: 3
   value: 3
-  student: two
-  lesson: one
+  student_id: 2
+  lesson_id: 1
 
-three:
+four:
+  id: 4
   value: 5
-  student: three
-  lesson: three
+  student_id: 3
+  lesson_id: 3

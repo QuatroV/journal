@@ -3,6 +3,7 @@
 class LessonController < ApplicationController
   skip_before_action :verify_authenticity_token, only: %i[update_grades update_homework create_lesson]
   before_action :current_student_is_admin?, only: %i[delete_lesson new_lesson create_lesson]
+  before_action :current_student_is_teacher_or_admin?, only: %i[show_lesson update_grades update_homework]
   before_action :correct_subject?, only: %i[show_lesson update_grades update_homework]
 
   def show_lesson; end
