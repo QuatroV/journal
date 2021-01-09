@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class GradeController < ApplicationController
-  before_action :current_student_is_student?, only: [:show_all_grades]
-  before_action :current_student_is_teacher?, only: %i[show_all_grades_for_teacher get_marks_for_class]
+  before_action :current_student_is_student, only: [:show_all_grades]
+  before_action :current_student_is_teacher, only: %i[show_all_grades_for_teacher get_marks_for_class]
 
   def show_all_grades; end
 

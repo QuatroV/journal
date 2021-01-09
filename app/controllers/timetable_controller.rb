@@ -30,9 +30,11 @@ class TimetableController < ApplicationController
   private
 
   def daily_timetable_with_marks(date)
-    lesson_amount = Lesson.where(day: date, classnum: current_student.classnum, classlet: current_student.classlet).count
-    today_lessons = Lesson.order(pos: :asc).where(day: date, classnum: current_student.classnum, classlet: current_student.classlet)
-    unless Lesson.find_by(day: date, classnum: current_student.classnum, classlet: current_student.classlet).blank?
+    num = current_student.classnum
+    let = current_student.classlet
+    lesson_amount = Lesson.where(day: date, classnum: num, classlet: let).count
+    today_lessons = Lesson.order(pos: :asc).where(day: date, classnum: num, classlet: let)
+    unless Lesson.find_by(day: date, classnum: num, classlet: let).blank?
       timetable = today_lessons.select(:id, :pos, :subject, :homework).to_a
     end
     current_user_marks = []
@@ -53,18 +55,18 @@ class TimetableController < ApplicationController
   end
 
   def daily_timetable_without_marks(date)
-    current_teacher_id = current_student.id
-    today_lessons = Lesson.order(pos: :asc, classnum: :asc, classlet: :asc).where(day: date, teacher_id: current_teacher_id)
+    c_teacher_id = current_student.id
+    today_lessons = Lesson.order(pos: :asc, classnum: :asc, classlet: :asc).where(day: date, teacher_id: c_teacher_id)
     unless Lesson.find_by(day: date).blank?
       timetable = today_lessons.select(:id, :pos, :subject, :homework, :classnum, :classlet).to_a
     end
   end
 
   def daily_timetable_min(date)
-    current_classnum = params[:chosen_classnum]
-    current_classlet = params[:chosen_classlet]
-    today_lessons = Lesson.order(pos: :asc, classnum: :asc, classlet: :asc).where(day: date, classnum: current_classnum, classlet: current_classlet)
-    unless Lesson.find_by(day: date, classnum: current_classnum, classlet: current_classlet).blank?
+    num = params[:chosen_classnum]
+    let = params[:chosen_classlet]
+    today_lessons = Lesson.order(pos: :asc, classnum: :asc, classlet: :asc).where(day: date, classnum: num, classlet: let)
+    unless Lesson.find_by(day: date, classnum: num, classlet: let).blank?
       timetable = today_lessons.select(:id, :pos, :subject, :homework).to_a
     end
     teachers = []

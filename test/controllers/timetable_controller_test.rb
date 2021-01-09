@@ -3,7 +3,6 @@
 require 'test_helper'
 
 class TimetableControllerTest < ActionDispatch::IntegrationTest
-  
   test 'unauthorized user will be redirected to login page' do
     get root_url
     assert_redirected_to new_student_session_path
@@ -15,5 +14,4 @@ class TimetableControllerTest < ActionDispatch::IntegrationTest
     get root_url
     assert_response :success
   end
-
 end

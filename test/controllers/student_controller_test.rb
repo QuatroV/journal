@@ -3,7 +3,6 @@
 require 'test_helper'
 
 class StudentControllerTest < ActionDispatch::IntegrationTest
-
   test 'student will see his/her marks' do
     get '/students/sign_up'
     sign_in students(:one)
@@ -17,5 +16,4 @@ class StudentControllerTest < ActionDispatch::IntegrationTest
     get '/student/show_all_students'
     assert_response :success
   end
-  
 end

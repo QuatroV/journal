@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class StudentController < ApplicationController
-  before_action :current_student_is_admin?, only: %i[show_all_students get_all_students]
+  before_action :current_student_is_admin, only: %i[show_all_students get_all_students]
 
   def show_all_students; end
 

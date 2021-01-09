@@ -2,9 +2,9 @@
 
 class LessonController < ApplicationController
   skip_before_action :verify_authenticity_token, only: %i[update_grades update_homework create_lesson]
-  before_action :current_student_is_admin?, only: %i[delete_lesson new_lesson create_lesson]
-  before_action :current_student_is_teacher_or_admin?, only: %i[show_lesson update_grades update_homework]
-  before_action :correct_subject?, only: %i[show_lesson update_grades update_homework]
+  before_action :current_student_is_admin, only: %i[delete_lesson new_lesson create_lesson]
+  before_action :current_student_is_teacher_or_admin, only: %i[show_lesson update_grades update_homework]
+  before_action :correct_subject, only: %i[show_lesson update_grades update_homework]
 
   def show_lesson; end
 
@@ -32,8 +32,8 @@ class LessonController < ApplicationController
   end
 
   def update_homework
-    updated_lesson = params[:updated_lesson]
-    old_lesson = Lesson.find_by(id: params[:updated_lesson])
+    updated_lesson_id = params[:updated_lesson]
+    old_lesson = Lesson.find_by(id: updated_lesson_id)
     old_lesson.update(homework: params[:updated_homework]) if old_lesson.homework != params[:updated_homework]
   end
 
@@ -47,7 +47,14 @@ class LessonController < ApplicationController
 
   def create_lesson
     if teacher_is_free?(params[:day], params[:pos], params[:teacher_id])
-      Lesson.create(day: params[:day], pos: params[:pos], subject: params[:subject], teacher_id: params[:teacher_id], homework: params[:homework], classnum: params[:classnum], classlet: params[:classlet])
+      day = params[:day]
+      pos = params[:pos]
+      subj = params[:subject]
+      t_id = params[:teacher_id]
+      hw = params[:homework]
+      num = params[:classnum]
+      let = params[:classlet]
+      Lesson.create(day: day, pos: pos, subject: subj, teacher_id: t_id, homework: hw, classnum: num, classlet: let)
     end
   end
 
