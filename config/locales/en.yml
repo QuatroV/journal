@@ -30,7 +30,7 @@ en:
   timetable:
     show:
       schedule: "Schedule"
-      choose_week: "Chose the week"
+      choose_week: "Choose the week"
       and_class: " and class"
       to_see_the_schedule: ", to see the schedule"
       show_button: "Show"
