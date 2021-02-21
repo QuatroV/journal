@@ -28,7 +28,7 @@ Rails.application.routes.draw do
     get 'subject/delete_subject'
     devise_for :students
     # if route not found
-    # get '*path' => redirect('/')
+    get '*path' => redirect('/')
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
